@@ -1,5 +1,5 @@
 import addons from '@storybook/addons';
-import { EVENT_ID } from './events';
+import { STORY_EVENT_ID } from './events';
 
 function getLocation(context, locationsMap) {
   return locationsMap[`${context.kind}@${context.name}`] || locationsMap[`@${context.name}`];
@@ -8,11 +8,15 @@ function getLocation(context, locationsMap) {
 function setStorySource(context, source, locationsMap) {
   const channel = addons.getChannel();
   const currentLocation = getLocation(context, locationsMap);
+  const {
+    parameters: { fileName },
+  } = context;
 
-  channel.emit(EVENT_ID, {
+  channel.emit(STORY_EVENT_ID, {
     source,
     currentLocation,
     locationsMap,
+    fileName,
   });
 }
 

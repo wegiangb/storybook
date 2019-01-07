@@ -1,28 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'; // eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types';
-import { Typography, SyntaxHighlighter } from '@storybook/components';
-
-import { createElement } from 'react-syntax-highlighter';
-import { EVENT_ID } from './events';
-
-const styles = {
-  story: {
-    display: 'block',
-    textDecoration: 'none',
-  },
-  selectedStory: {
-    backgroundColor: 'rgba(255, 242, 60, 0.2)',
-  },
-  panel: {
-    width: '100%',
-  },
-};
-
-const areLocationsEqual = (a, b) =>
-  a.startLoc.line === b.startLoc.line &&
-  a.startLoc.col === b.startLoc.col &&
-  a.endLoc.line === b.endLoc.line &&
-  a.endLoc.col === b.endLoc.col;
+/** @jsx jsx */
+import { css, jsx } from '@emotion/core';
+import { Editor } from '@storybook/components';
+import { document } from 'global';
+import { SAVE_FILE_EVENT_ID, STORY_EVENT_ID } from './events';
 
 const getLocationKeys = locationsMap =>
   locationsMap
@@ -32,156 +14,187 @@ const getLocationKeys = locationsMap =>
     : [];
 
 export default class StoryPanel extends Component {
-  state = { source: 'loading source...' };
+  state = {
+    source: '// 🦄 Looking for it, hold on tight',
+    lineDecorations: [],
+    additionalStyles: css`
+      background-color: #c6ff0040;
+    `,
+  };
 
   componentDidMount() {
-    this.mounted = true;
     const { channel } = this.props;
 
-    channel.on(EVENT_ID, this.listener);
-  }
-
-  componentDidUpdate() {
-    if (this.selectedStoryRef) {
-      this.selectedStoryRef.scrollIntoView();
-    }
+    channel.on(STORY_EVENT_ID, this.listener);
   }
 
   componentWillUnmount() {
     const { channel } = this.props;
 
-    channel.removeListener(EVENT_ID, this.listener);
+    channel.removeListener(STORY_EVENT_ID, this.listener);
   }
 
-  setSelectedStoryRef = ref => {
-    this.selectedStoryRef = ref;
-  };
-
-  listener = ({ source, currentLocation, locationsMap }) => {
+  listener = ({ fileName, source, currentLocation, locationsMap }) => {
     const locationsKeys = getLocationKeys(locationsMap);
 
     this.setState({
+      fileName,
       source,
       currentLocation,
-      locationsMap,
-      locationsKeys,
+      locationsMap, // eslint-disable-line react/no-unused-state
+      locationsKeys, // eslint-disable-line react/no-unused-state
     });
   };
 
-  clickOnStory = (kind, story) => {
-    const { api } = this.props;
-
-    if (kind && story) {
-      api.selectStory(kind, story);
-    }
-  };
-
-  createPart = (rows, stylesheet, useInlineStyles) =>
-    rows.map((node, i) =>
-      createElement({
-        node,
-        stylesheet,
-        useInlineStyles,
-        key: `code-segement${i}`,
-      })
-    );
-
-  createStoryPart = (rows, stylesheet, useInlineStyles, location, kindStory) => {
-    const { currentLocation } = this.state;
-    const first = location.startLoc.line - 1;
-    const last = location.endLoc.line;
-
-    const storyRows = rows.slice(first, last);
-    const story = this.createPart(storyRows, stylesheet, useInlineStyles);
-    const storyKey = `${first}-${last}`;
-
-    if (areLocationsEqual(location, currentLocation)) {
-      return (
-        <div key={storyKey} ref={this.setSelectedStoryRef} style={styles.selectedStory}>
-          {story}
-        </div>
-      );
-    }
-
-    const [selectedKind, selectedStory] = kindStory.split('@');
-    const url = `/?selectedKind=${selectedKind}&selectedStory=${selectedStory}`;
-
-    return (
-      <Typography.Link
-        href={url}
-        key={storyKey}
-        onClick={() => this.clickOnStory(selectedKind, selectedStory)}
-        style={styles.story}
-      >
-        {story}
-      </Typography.Link>
-    );
-  };
-
-  createParts = (rows, stylesheet, useInlineStyles) => {
-    const { locationsMap, locationsKeys } = this.state;
-
-    const parts = [];
-    let lastRow = 0;
-
-    locationsKeys.forEach(key => {
-      const location = locationsMap[key];
-      const first = location.startLoc.line - 1;
-      const last = location.endLoc.line;
-
-      const start = this.createPart(rows.slice(lastRow, first), stylesheet, useInlineStyles);
-      const storyPart = this.createStoryPart(rows, stylesheet, useInlineStyles, location, key);
-
-      parts.push(start);
-      parts.push(storyPart);
-
-      lastRow = last;
+  editorDidMount = (editor, monaco) => {
+    editor.addAction({
+      id: 'save-the-selected-story-in-source-file',
+      label: '🇸 Save the selected story in source file',
+      keybindings: [
+        // eslint-disable-next-line no-bitwise
+        monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S,
+        // chord
+        monaco.KeyMod.chord(
+          // eslint-disable-next-line no-bitwise
+          monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_X,
+          // eslint-disable-next-line no-bitwise
+          monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S
+        ),
+      ],
+      precondition: null,
+      keybindingContext: null,
+      contextMenuGroupId: 'navigation',
+      contextMenuOrder: 1.5,
+      run: thisEditor => {
+        const { fileName } = this.state;
+        const { channel } = this.props;
+        const content = thisEditor.getModel().getValue();
+        channel.emit(SAVE_FILE_EVENT_ID, {
+          fileName,
+          content,
+        });
+        return null;
+      },
     });
-
-    const lastPart = this.createPart(rows.slice(lastRow), stylesheet, useInlineStyles);
-
-    parts.push(lastPart);
-
-    return parts;
   };
 
-  lineRenderer = ({ rows, stylesheet, useInlineStyles }) => {
-    const { locationsMap, locationsKeys } = this.state;
+  onStoryRendered = (editor, monaco) => {
+    const {
+      currentLocation: {
+        startLoc: { line: startLocLine },
+      },
+    } = this.state;
+    editor._revealLine(startLocLine);
+    editor._modelData.view._actualRender();
+  };
 
-    // because of the usage of lineRenderer, all lines will be wrapped in a span
-    // these spans will recieve all classes on them for some reason
-    // which makes colours casecade incorrectly
-    // this removed that list of classnames
-    const myrows = rows.map(({ properties, ...rest }) => ({
-      ...rest,
-      properties: { className: [] },
-    }));
+  updateSource = (
+    newSource,
+    {
+      changes: [
+        {
+          range: { startLineNumber, endLineNumber, endColumn, startColumn },
+          text,
+        },
+      ],
+    }
+  ) => {
+    const {
+      currentLocation: {
+        startLoc: { line: startLocLine, col: startLocCol },
+        endLoc: { line: endLocLine, col: endLocCol },
+      },
+    } = this.state;
 
-    if (!locationsMap || !locationsKeys.length) {
-      return this.createPart(myrows, stylesheet, useInlineStyles);
+    const newEndLocLine =
+      endLocLine -
+      (endLineNumber - startLineNumber) /* selection range cut */ +
+      text.split('').filter(x => x === '\n')
+        .length; /* all the line feeds in the replacement text */
+    let newEndLocCol;
+    if (endLineNumber < endLocLine) {
+      /* edge column not moving if change occuring above */
+      newEndLocCol = endLocCol;
+    } else if (startLineNumber === endLineNumber && text.indexOf('\n') === -1) {
+      /* new character typed / removed */
+      newEndLocCol = endLocCol + text.length - (endColumn - startColumn);
+    } else {
+      /* the last line was probably merged with the previous one(s) */
+      newEndLocCol = newSource.split('\n')[newEndLocLine - 1].length - 1;
     }
 
-    const parts = this.createParts(myrows, stylesheet, useInlineStyles);
-
-    return <span>{parts}</span>;
+    this.setState({
+      source: newSource,
+      currentLocation: {
+        startLoc: { line: startLocLine, col: startLocCol },
+        endLoc: { line: newEndLocLine, col: newEndLocCol },
+      },
+    });
   };
 
-  render() {
-    const { active } = this.props;
-    const { source } = this.state;
+  changePosition = (e, editor, monaco) => {
+    const {
+      additionalStyles,
+      lineDecorations,
+      currentLocation: { startLoc, endLoc },
+    } = this.state;
+    const highlightClassName = `css-${additionalStyles.name}`;
+
+    // probably a bug in monaco editor.
+    // we will prevent the first highlighting from gluing in the editor
+    const allDecorations = lineDecorations.length
+      ? lineDecorations
+      : // eslint-disable-next-line no-underscore-dangle
+        Object.values(monaco.editor.getModels()[0]._decorationsTree)
+          .map(tree => tree.root.id)
+          .filter(id => id);
+    const newLineDecorations = editor.deltaDecorations(allDecorations, [
+      {
+        range: new monaco.Range(startLoc.line, startLoc.col + 1, endLoc.line, endLoc.col + 1),
+        options: { isWholeLine: false, inlineClassName: highlightClassName },
+      },
+    ]);
+
+    if (
+      e.position.lineNumber < startLoc.line ||
+      (e.position.lineNumber === startLoc.line && e.position.column < startLoc.col)
+    )
+      editor.setPosition({
+        lineNumber: startLoc.line,
+        column: startLoc.col,
+      });
+    if (
+      e.position.lineNumber > endLoc.line ||
+      (e.position.lineNumber === endLoc.line && e.position.column > endLoc.col + 1)
+    )
+      editor.setPosition({
+        lineNumber: endLoc.line,
+        column: endLoc.col + 1,
+      });
+
+    if (newLineDecorations[0] !== lineDecorations[0])
+      this.setState({ lineDecorations: newLineDecorations });
+  };
+
+  render = () => {
+    const { channel, active } = this.props;
+    const { source, additionalStyles } = this.state;
 
     return active ? (
-      <SyntaxHighlighter
-        language="jsx"
-        showLineNumbers="true"
-        renderer={this.lineRenderer}
-        copyable={false}
-        padded
-      >
-        {source}
-      </SyntaxHighlighter>
+      <Editor
+        css={additionalStyles}
+        source={source}
+        onChange={this.updateSource}
+        componentDidMount={this.editorDidMount}
+        changePosition={this.changePosition}
+        onStoryRendered={this.onStoryRendered}
+        channel={channel}
+        resizeContainerReference={() =>
+          (document.getElementById('storybook-panel-root') || {}).parentNode
+        }
+      />
     ) : null;
-  }
+  };
 }
 
 StoryPanel.propTypes = {

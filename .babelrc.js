@@ -26,14 +26,14 @@ module.exports = {
     },
     {
       test: [
-        './lib/core/src/server',
-        './lib/node-logger',
-        './lib/codemod',
         './addons/storyshots',
         './addons/storysource/src/loader',
         './app/**/src/server/**',
         './app/**/src/bin/**',
         './dangerfile.js',
+        './lib/codemod',
+        './lib/core/src/server',
+        './lib/node-logger',
       ],
       presets: [
         [
