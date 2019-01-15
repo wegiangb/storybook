@@ -3,6 +3,7 @@ module.exports = {
     ['@babel/preset-env', { shippedProposals: true, useBuiltIns: 'usage' }],
     '@babel/preset-react',
     '@babel/preset-flow',
+    '@babel/preset-typescript',
   ],
   plugins: [
     ['@babel/plugin-proposal-object-rest-spread', { loose: true, useBuiltIns: true }],

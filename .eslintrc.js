@@ -1,6 +1,7 @@
 const error = 2;
 const warn = 1;
 const ignore = 0;
+
 module.exports = {
   root: true,
   extends: [
@@ -10,9 +11,13 @@ module.exports = {
     'prettier',
     'prettier/react',
   ],
-  plugins: ['prettier', 'jest', 'import', 'react', 'jsx-a11y', 'json', 'html'],
+  plugins: ['prettier', 'jest', 'import', 'react', 'jsx-a11y', 'json', 'html', 'typescript'],
   parser: 'babel-eslint',
-  parserOptions: { ecmaVersion: 8, sourceType: 'module' },
+  parserOptions: {
+    ecmaVersion: 8,
+    sourceType: 'module',
+    typescript: true,
+  },
   env: { es6: true, node: true, 'jest/globals': true },
   settings: {
     'import/core-modules': ['enzyme'],
