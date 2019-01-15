@@ -1,6 +1,6 @@
 {
   "name": "@storybook/react-native",
-  "version": "5.0.0-debug.1",
+  "version": "5.0.0-alpha.1",
   "description": "A better way to develop React Native Components for your app",
   "keywords": [
     "react",
@@ -25,14 +25,14 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "5.0.0-debug.1",
-    "@storybook/channel-websocket": "5.0.0-debug.1",
-    "@storybook/channels": "5.0.0-debug.1",
-    "@storybook/core": "5.0.0-debug.1",
-    "@storybook/core-events": "5.0.0-debug.1",
-    "@storybook/ui": "5.0.0-debug.1",
+    "@storybook/addons": "5.0.0-alpha.1",
+    "@storybook/channel-websocket": "5.0.0-alpha.1",
+    "@storybook/channels": "5.0.0-alpha.1",
+    "@storybook/core": "5.0.0-alpha.1",
+    "@storybook/core-events": "5.0.0-alpha.1",
+    "@storybook/ui": "5.0.0-alpha.1",
     "babel-loader": "^8.0.4",
-    "babel-plugin-macros": "^2.4.4",
+    "babel-plugin-macros": "^2.4.5",
     "babel-plugin-syntax-async-functions": "^6.13.0",
     "babel-plugin-syntax-trailing-function-commas": "^6.22.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -55,7 +55,7 @@
     "lazy-universal-dotenv": "^2.0.0",
     "prop-types": "^15.6.2",
     "raw-loader": "^1.0.0",
-    "react-dev-utils": "^7.0.0",
+    "react-dev-utils": "^7.0.1",
     "react-native-swipe-gestures": "^1.0.2",
     "shelljs": "^0.8.2",
     "url-parse": "^1.4.3",

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/core",
-  "version": "5.0.0-debug.1",
+  "version": "5.0.0-alpha.1",
   "description": "Storybook framework-agnostic API",
   "keywords": [
     "storybook"
@@ -25,21 +25,21 @@
     "@babel/preset-env": "^7.2.3",
     "@emotion/core": "^10.0.5",
     "@emotion/styled": "^10.0.5",
-    "@storybook/addons": "5.0.0-debug.1",
-    "@storybook/channel-postmessage": "5.0.0-debug.1",
-    "@storybook/client-logger": "5.0.0-debug.1",
-    "@storybook/core-events": "5.0.0-debug.1",
-    "@storybook/node-logger": "5.0.0-debug.1",
-    "@storybook/ui": "5.0.0-debug.1",
+    "@storybook/addons": "5.0.0-alpha.1",
+    "@storybook/channel-postmessage": "5.0.0-alpha.1",
+    "@storybook/client-logger": "5.0.0-alpha.1",
+    "@storybook/core-events": "5.0.0-alpha.1",
+    "@storybook/node-logger": "5.0.0-alpha.1",
+    "@storybook/ui": "5.0.0-alpha.1",
     "airbnb-js-shims": "^1 || ^2",
     "autoprefixer": "^9.4.4",
     "babel-plugin-emotion": "^10.0.5",
-    "babel-plugin-macros": "^2.4.4",
+    "babel-plugin-macros": "^2.4.5",
     "babel-preset-minify": "^0.5.0 || 0.6.0-alpha.5",
     "body-parser": "^1.18.3",
     "boxen": "^2.1.0",
     "case-sensitive-paths-webpack-plugin": "^2.1.2",
-    "chalk": "^2.4.1",
+    "chalk": "^2.4.2",
     "child-process-promise": "^2.2.1",
     "cli-table3": "0.5.1",
     "commander": "^2.19.0",
@@ -81,6 +81,7 @@
     "react-dev-utils": "^7.0.0",
     "regenerator-runtime": "^0.12.1",
     "resolve": "^1.9.0",
+    "resolve-from": "^4.0.0",
     "semver": "^5.6.0",
     "serve-favicon": "^2.5.0",
     "shelljs": "^0.8.2",
@@ -89,6 +90,7 @@
     "svg-url-loader": "^2.3.2",
     "terser-webpack-plugin": "^1.2.1",
     "url-loader": "^1.1.2",
+    "util-deprecate": "^1.0.2",
     "webpack": "^4.28.3",
     "webpack-dev-middleware": "^3.4.0",
     "webpack-hot-middleware": "^2.24.3"
@@ -98,8 +100,8 @@
   },
   "peerDependencies": {
     "babel-loader": "^7.0.0 || ^8.0.0",
-    "react": "^16.7.0-alpha.2",
-    "react-dom": "^16.7.0-alpha.2"
+    "react": "*",
+    "react-dom": "*"
   },
   "publishConfig": {
     "access": "public"
