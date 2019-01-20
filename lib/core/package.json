@@ -100,6 +100,11 @@
     "react": "*",
     "react-dom": "*"
   },
+  "peerDependenciesMeta": {
+    "babel-loader": {
+      "optional": true
+    }
+  },
   "publishConfig": {
     "access": "public"
   }
