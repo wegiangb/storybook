@@ -9,21 +9,20 @@ Storybook's manager UI is theme-able! You can change theme variables using [addo
 
 You can do this in an decorator, addon or in `.storybook/config.js`. Changing theme at runtime is supported!
 
-First, create or modify `.storybook/addons.js` to include registering addon-options:  
+First, create or modify `.storybook/addons.js` to include registering addon-options:
 ```js
 import '@storybook/addon-options/register';
 ```
 
-Then, modify `.storybook/config.js` to include your new options:  
+Then, modify `.storybook/config.js` to include your new options:
 ```js
-import { addDecorator, configure } from '@storybook/react';
-import { withOptions } from '@storybook/addon-options';
+import { addParameters, configure } from '@storybook/react';
 
-addDecorator(
-  withOptions({
+addParameters({
+  options: {
     theme: {},
-  })
-);
+  },
+});
 ```
 
 When setting a theme, set a full theme object, the theme is replaced, not combined.
@@ -37,17 +36,16 @@ We have created 2 themes for you: "normal" (a light theme) and "dark" (a dark th
 You can get these themes like so:
 
 ```js
-import { addDecorator, configure } from '@storybook/react';
-import { withOptions } from '@storybook/addon-options';
+import { addParameters, configure } from '@storybook/react';
 import { themes } from '@storybook/components';
 
 // Option defaults.
-addDecorator(
-  withOptions({
+addParameters({
+  options: {
     name: 'Foo',
     theme: themes.dark,
-  })
-);
+  },
+});
 ```
 
 ## Theme variables
@@ -163,7 +161,7 @@ The styles provided here support everything [emotion](https://emotion.sh/) does.
 
 ## Adding more theme variables for addons
 
-If addons have a need for specific theme variables, the user has to add them. 
+If addons have a need for specific theme variables, the user has to add them.
 We advise addons to reuse the variables listed above as much as possible.
 
 Addon actions uses [react-inspector](https://github.com/xyc/react-inspector/blob/master/src/styles/themes/chromeLight.js) which has themes of it's own. If you want to theme it (our themes do) you can add needs the following additional theme variables:

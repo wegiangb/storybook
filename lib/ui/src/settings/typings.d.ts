@@ -1,3 +1,9 @@
 declare module 'global';
 declare module '@storybook/client-logger';
 declare module '@storybook/components/src/treeview/utils';
+declare module '@storybook/components';
+declare module '@storybook/ui/src/settings/components';
+declare module 'react-inspector';
+declare module 'qs';
+declare module '@reach/router';
+declare module '@storybook/ui/src/settings/keyboardComponents';
