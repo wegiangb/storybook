@@ -1,6 +1,6 @@
 {
   "name": "@storybook/core",
-  "version": "5.0.0-alpha.7",
+  "version": "5.0.0-alpha.9",
   "description": "Storybook framework-agnostic API",
   "keywords": [
     "storybook"
@@ -19,19 +19,19 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.2.3",
-    "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
+    "@babel/plugin-proposal-class-properties": "^7.3.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.3.1",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/preset-env": "^7.2.3",
-    "@storybook/addons": "5.0.0-alpha.7",
-    "@storybook/channel-postmessage": "5.0.0-alpha.7",
-    "@storybook/client-logger": "5.0.0-alpha.7",
-    "@storybook/core-events": "5.0.0-alpha.7",
-    "@storybook/node-logger": "5.0.0-alpha.7",
-    "@storybook/theming": "5.0.0-alpha.7",
-    "@storybook/ui": "5.0.0-alpha.7",
+    "@storybook/addons": "5.0.0-alpha.9",
+    "@storybook/channel-postmessage": "5.0.0-alpha.9",
+    "@storybook/client-logger": "5.0.0-alpha.9",
+    "@storybook/core-events": "5.0.0-alpha.9",
+    "@storybook/node-logger": "5.0.0-alpha.9",
+    "@storybook/theming": "5.0.0-alpha.9",
+    "@storybook/ui": "5.0.0-alpha.9",
     "airbnb-js-shims": "^1 || ^2",
-    "autoprefixer": "^9.4.5",
+    "autoprefixer": "^9.4.6",
     "babel-plugin-emotion": "^10.0.5",
     "babel-plugin-macros": "^2.4.5",
     "babel-preset-minify": "^0.5.0 || 0.6.0-alpha.5",
@@ -76,7 +76,7 @@
     "raw-loader": "^1.0.0",
     "react-dev-utils": "^7.0.0",
     "regenerator-runtime": "^0.12.1",
-    "resolve": "^1.9.0",
+    "resolve": "^1.10.0",
     "resolve-from": "^4.0.0",
     "semver": "^5.6.0",
     "serve-favicon": "^2.5.0",
@@ -87,11 +87,12 @@
     "terser-webpack-plugin": "^1.2.1",
     "url-loader": "^1.1.2",
     "util-deprecate": "^1.0.2",
-    "webpack": "^4.28.4",
+    "webpack": "^4.29.0",
     "webpack-dev-middleware": "^3.5.1",
     "webpack-hot-middleware": "^2.24.3"
   },
   "devDependencies": {
+    "flush-promises": "^1.0.2",
     "mock-fs": "^4.7.0"
   },
   "peerDependencies": {

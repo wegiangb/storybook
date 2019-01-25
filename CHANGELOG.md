@@ -1,3 +1,72 @@
+## 4.1.11 (January 24, 2019)
+
+### Bug Fixes
+
+* React-native: Fixed isUIHidden param ([#5067](https://github.com/storybooks/storybook/pull/5067))
+* React-native: Disabling warning if story is not set in async storage ([#5068](https://github.com/storybooks/storybook/pull/5068))
+
+## 4.1.10 (January 24, 2019)
+
+Release failed due to NPM error
+
+## 5.0.0-alpha.9 (January 23, 2019)
+
+### Features
+
+* Core: Add a STORY_UNCHANGED event ([#5340](https://github.com/storybooks/storybook/pull/5340))
+* Core: Add a persistence API to context/state -- use for keyboard shortcuts ([#5289](https://github.com/storybooks/storybook/pull/5289))
+
+### Maintenance
+
+* Addon-knobs: Fix story so array type is array ([#5318](https://github.com/storybooks/storybook/pull/5318))
+
+### Dependency Upgrades
+
+* Bump ts-node from 7.0.1 to 8.0.1 ([#5346](https://github.com/storybooks/storybook/pull/5346))
+* Bump marko from 4.14.20 to 4.14.21 ([#5343](https://github.com/storybooks/storybook/pull/5343))
+* Bump @types/jest from 23.3.12 to 23.3.13 ([#5327](https://github.com/storybooks/storybook/pull/5327))
+* Bump @babel/plugin-proposal-class-properties from 7.2.3 to 7.3.0 ([#5326](https://github.com/storybooks/storybook/pull/5326))
+* Bump esm from 3.1.0 to 3.1.1 ([#5328](https://github.com/storybooks/storybook/pull/5328))
+* Bump resolve from 1.9.0 to 1.10.0 ([#5329](https://github.com/storybooks/storybook/pull/5329))
+* Bump webpack from 4.28.4 to 4.29.0 ([#5331](https://github.com/storybooks/storybook/pull/5331))
+
+## 4.1.9 (January 23, 2019)
+
+Note that `4.1.7` contained a bad merge that missed an important change. This release fixes that:
+
+### Bug Fixes
+
+* Core: Add missing polyfills to manager to support IE  ([#5238](https://github.com/storybooks/storybook/pull/5238))
+
+## 4.1.8 (January 23, 2019)
+
+Bad release
+
+## 5.0.0-alpha.8 (January 22, 2019)
+
+### Features
+
+* UI: Memoize treeview utils && ADD fuzzy search ([#5321](https://github.com/storybooks/storybook/pull/5321))
+
+### Maintenance
+
+* Migrate addon google analytics to TS ([#5307](https://github.com/storybooks/storybook/pull/5307))
+* Storyshots: restore emotion snapshots ([#5305](https://github.com/storybooks/storybook/pull/5305))
+
+### Dependency Upgrades
+
+* Bump eslint-config-prettier from 3.5.0 to 3.6.0 ([#5311](https://github.com/storybooks/storybook/pull/5311))
+* Bump eslint-plugin-react from 7.12.3 to 7.12.4 ([#5310](https://github.com/storybooks/storybook/pull/5310))
+* Bump vuex from 3.0.1 to 3.1.0 ([#5316](https://github.com/storybooks/storybook/pull/5316))
+* Bump lerna from 3.10.5 to 3.10.6 ([#5313](https://github.com/storybooks/storybook/pull/5313))
+* Bump react-docgen-typescript-loader from 3.0.0 to 3.0.1 ([#5315](https://github.com/storybooks/storybook/pull/5315))
+* Bump eslint from 5.12.0 to 5.12.1 ([#5314](https://github.com/storybooks/storybook/pull/5314))
+* Bump jscodeshift from 0.6.2 to 0.6.3 ([#5317](https://github.com/storybooks/storybook/pull/5317))
+
+## 5.0.0-alpha.7 (January 20, 2019)
+
+### Breaking Changes
+
 * Addon-centered: Add special entry-points for Vue and React ([#5296](https://github.com/storybooks/storybook/pull/5296))
 
 ### Features
