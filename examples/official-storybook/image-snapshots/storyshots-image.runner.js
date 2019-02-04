@@ -26,7 +26,7 @@ const server = http.createServer((request, response) =>
 );
 
 beforeAll(
-  () =>
+  async () =>
     new Promise(res => {
       server.listen(3000, res);
     })
@@ -53,7 +53,7 @@ if (!fs.existsSync(pathToStorybookStatic)) {
 }
 
 afterAll(
-  () =>
+  async () =>
     new Promise(res => {
       server.close(res);
     })
